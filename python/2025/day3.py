@@ -1,3 +1,4 @@
+# https://adventofcode.com/2025/day/3
 def largestJoltage(input : str, batteries : int):
     currJoltage = list(input[0:batteries])
 
@@ -9,6 +10,11 @@ def largestJoltage(input : str, batteries : int):
     for i in range(batteries, len(input)):
         d = input[i]
         flag = True
+        """
+        Check if digit directly to right is larger than current digit
+        Pop current digit if true, append new digit, change flag, then break
+        Always results in larger number
+        """
         for idx in range(lastIndex - 1):
             if currJoltage[idx] < currJoltage[idx + 1]:
                 currJoltage.pop(idx)
@@ -16,6 +22,10 @@ def largestJoltage(input : str, batteries : int):
                 flag = False
                 break
         
+        """
+        If previous step did not append, check if new digit is larger than min digit in list
+        Pop and append min digit if true
+        """
         if flag and d > minDigit:
             currJoltage.pop(minIndex)
             currJoltage.append(d)
@@ -30,7 +40,9 @@ output2 = 0
 with open ("input3.txt" , "r") as file:
     for line in file:
         data = line.strip()
-        ## Old Part A
+        """
+        START Old Part A
+        """
         # d1 = line[0]
         # d2 = line[1]
         # for i in range(1, len(data)):
@@ -40,6 +52,9 @@ with open ("input3.txt" , "r") as file:
         #     elif data[i] > d2:
         #         d2 = data[i]
         # output1 += int(d1) * 10 + int(d2)
+        """
+        END Old Part A
+        """
 
         output1 += largestJoltage(data, 2)
         output2 += largestJoltage(data, 12)
